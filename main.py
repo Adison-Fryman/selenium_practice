@@ -1,26 +1,71 @@
-import unittest
 from selenium import webdriver
+# service is required with my browser version
+from selenium.webdriver.chrome.service import Service
+# from selenium.webdriver.chrome.options import Options
+from webdriver_manager.chrome import ChromeDriverManager
+
+# this holds the browser window open (options)
+# options = Options()
+# options.add_experimental_option("detach", True)
+# driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=options)
+
+# non-options driver
+# driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()))
+
+# don't need this now
+# driver.get("https://www.python.org")
+
+import unittest
 import page
 
+url = "https://www.python.org"
+
+
 # gives access to methods, run all tests
+
 class PythonOrgSearch(unittest.TestCase):
-  
-  def setUp(self):
-    #put varibles in here
-    self.driver = PATH #need to get my path here
-    self.driver.get(https://www.python.org/)
-  
-  def test_example():
-    #auto run when running unittest because starts with test
-    assert true
-    
-  def not_a_test():
+
+    def setUp(self):
+        # put varibles in here
+        self.driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()))
+        # options driver below if needed
+        # self.driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=options)
+        self.driver.get(url)
+
+    def test_search_python(self):
+        mainPage = page.MainPage()
+        assert mainPage.is_title_matches()
+        mainPage.search_text_element = "pycon"
+        mainPage.click_go_button()
+        search_result_page = page.SearchResultPage(self.driver)
+        assert search_result_page.is_result_found()
+
+    def test_example(self):
+        # auto run when running unittest because starts with test
+        assert True
+
+    def test_example2(self):
+        # auto run when running unittest because starts with test
+        assert False
+
+    def not_a_test(self):
+        pass
+
+    def tearDown(self):
+        self.driver.close()
+
+
+class Navigate():
     pass
-  
-  def tearDown(self):
-    self.driver.close()
-    
-    
- if __name__ = "__main__": 
-  unittest.main()
-  
+
+
+if __name__ == "__main__":
+    unittest.main()
+
+# note I made need to add the following imports due to depreciation
+# from selenium import webdriver
+# from selenium.webdriver.chrome.service import Service
+# s = Service('C:\Program Files (x86)\chromedriver.exe')
+# driver = webdriver.Chrome(service=s)
+# url = 'anyold URL'
+# driver.get(url)

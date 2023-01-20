@@ -1,7 +1,11 @@
 from selenium.webdriver.common.by import By
 
+
 class MainPageLocators(object):
-    GO_BUTTON =(BY.XPATH,"need xpath")
-    
+    # constant = access type,access point
+    GO_BUTTON = (By.ID, "submit")
+    # add more here
+
+
 class SearchResultsPageLocators(object):
-  pass
+    pass
